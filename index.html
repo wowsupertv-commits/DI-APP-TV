@@ -4,58 +4,232 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>DI App TV</title>
+
 <style>
-:root {
-  --bg:#0f1724; --card:#0b1220; --text:#e6eef6;
-  --muted:#9aa4b2; --accent:#ff6b35; --radius:12px;
+/* ---------- THEME COLORS ---------- */
+:root{
+  --bg:#0f1724;
+  --card:#0b1220;
+  --text:#e6eef6;
+  --muted:#9aa4b2;
+  --accent:#ff6b35;
+  --radius:12px;
   font-family:Inter,"Noto Sans Kannada",system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;
 }
-[data-theme="light"] {
-  --bg:#f7f7f9; --card:#ffffff; --text:#111; --muted:#555; --accent:#ff6b35;
+[data-theme="light"]{
+  --bg:#f7f7f9;
+  --card:#ffffff;
+  --text:#111;
+  --muted:#555;
 }
+
+/* ---------- BASE ---------- */
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);min-height:100vh;transition:background .3s,color .3s;}
-header{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;flex-wrap:wrap;gap:12px;background:var(--card);box-shadow:0 2px 5px rgba(0,0,0,.2);}
-.brand{display:flex;align-items:center;gap:12px}
-.logo{width:46px;height:46px;background:linear-gradient(135deg,#ff9b5c,#ff6b35);border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:700;color:#07101a;}
-.title{font-size:18px;font-weight:700}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  transition:background .3s,color .3s;
+}
+
+/* ---------- HEADER ---------- */
+header{
+  width:100%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:16px 24px;
+  background:var(--card);
+  box-shadow:0 2px 5px rgba(0,0,0,.2);
+}
+
+.brand{display:flex;align-items:center;gap:10px}
+.logo{
+  width:48px;height:48px;
+  background:linear-gradient(135deg,#ff9b5c,#ff6b35);
+  border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:800;font-size:20px;color:#0b1220;
+}
+.title{font-size:20px;font-weight:700}
 .subtitle{font-size:12px;color:var(--muted)}
-.controls{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-.search{background:var(--card);border:1px solid rgba(255,255,255,.1);border-radius:999px;padding:8px 12px;display:flex;align-items:center;gap:8px;flex:1;}
-.search input{background:transparent;border:0;outline:0;color:inherit;width:100%;min-width:140px;}
-.btn{background:var(--accent);border-radius:10px;padding:8px 12px;color:#07101a;font-weight:600;border:0;cursor:pointer;}
-.toggle-btn{background:var(--card);border:1px solid rgba(255,255,255,.2);border-radius:8px;padding:8px 12px;cursor:pointer;color:var(--text);}
-.tab-bar{display:flex;gap:10px;justify-content:center;background:rgba(255,255,255,.05);padding:10px;}
-.tab-btn{background:var(--card);border:0;color:var(--text);padding:6px 16px;border-radius:20px;cursor:pointer;font-size:14px;}
-.tab-btn.active{background:var(--accent);color:#07101a;font-weight:600}
-.lang-bar,.cat-bar{display:flex;overflow-x:auto;gap:8px;padding:8px 16px;background:rgba(255,255,255,.05);white-space:nowrap;}
-.lang-btn,.cat-btn{background:var(--card);border:0;color:var(--text);padding:6px 10px;border-radius:20px;cursor:pointer;font-size:13px;flex-shrink:0;}
-.lang-btn.active,.cat-btn.active{background:var(--accent);color:#07101a;font-weight:600}
-.container{display:grid;grid-template-columns:1fr 300px;gap:20px;padding:20px;max-width:1200px;margin:auto;}
-.sidebar{background:rgba(255,255,255,.03);padding:18px;border-radius:var(--radius);}
-.channel-list{display:flex;flex-direction:column;gap:8px;max-height:65vh;overflow:auto;}
-.channel-item{display:flex;gap:10px;align-items:center;padding:8px;border-radius:10px;cursor:pointer;}
-.channel-item:hover{background:rgba(255,255,255,.08)}
-.thumb{width:56px;height:36px;border-radius:6px;background:#122232;display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--muted);overflow:hidden;}
-.main{display:flex;flex-direction:column;gap:14px;position:relative}
-video{width:100%;height:420px;background:black;border-radius:8px;}
-.mini-player{position:fixed!important;width:280px!important;height:160px!important;bottom:15px;right:15px;z-index:999;box-shadow:0 0 10px rgba(0,0,0,.8);border-radius:8px;}
-#close-mini{position:absolute;top:5px;right:10px;background:rgba(255,255,255,.2);border:none;color:#fff;font-size:16px;cursor:pointer;display:none;}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px;}
-.card{background:var(--card);padding:12px;border-radius:12px;cursor:pointer;transition:transform .2s ease;}
-.card:hover{transform:scale(1.03)}
-.card .ch-thumb{height:110px;border-radius:8px;background:#08161f;display:flex;align-items:center;justify-content:center;overflow:hidden;}
-.card h4{margin:8px 0 4px;font-size:15px}
-.card p{margin:0;font-size:13px;color:var(--muted)}
-@media (max-width:768px){.container{grid-template-columns:1fr}video{height:240px}.sidebar{order:2;max-height:250px;overflow:auto}}
+
+.controls{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+
+.search{
+  background:var(--card);
+  border:1px solid rgba(255,255,255,.15);
+  border-radius:30px;
+  padding:8px 14px;
+  display:flex;
+  align-items:center;
+}
+.search input{
+  border:0;background:transparent;color:inherit;outline:0;
+  min-width:160px;
+}
+
+.btn{
+  padding:8px 12px;
+  background:var(--accent);
+  color:#0b1220;
+  font-weight:600;
+  border-radius:10px;
+  border:0;
+  cursor:pointer;
+}
+.toggle-btn{
+  padding:8px 12px;
+  background:var(--card);
+  border-radius:10px;
+  border:1px solid rgba(255,255,255,.2);
+  cursor:pointer;
+}
+
+/* ---------- TABS ---------- */
+.tab-bar{
+  display:flex;justify-content:center;gap:10px;
+  padding:12px;background:rgba(255,255,255,.05);
+}
+.tab-btn{
+  padding:6px 18px;border-radius:20px;
+  border:0;cursor:pointer;font-size:14px;
+  background:var(--card);color:var(--text);
+}
+.tab-btn.active{
+  background:var(--accent);
+  color:#0b1220;font-weight:600;
+}
+
+.lang-bar,.cat-bar{
+  display:flex;overflow-x:auto;white-space:nowrap;
+  gap:8px;padding:10px 16px;
+  background:rgba(255,255,255,.05);
+}
+.lang-bar::-webkit-scrollbar,
+.cat-bar::-webkit-scrollbar{
+  display:none;
+}
+
+.lang-btn,.cat-btn{
+  padding:6px 12px;border-radius:20px;
+  background:var(--card);color:var(--text);
+  border:0;cursor:pointer;flex-shrink:0;
+}
+.lang-btn.active,.cat-btn.active{
+  background:var(--accent);color:#0b1220;
+}
+
+/* ---------- MAIN LAYOUT ---------- */
+.container{
+  display:grid;
+  grid-template-columns:1.2fr 0.8fr;
+  gap:20px;
+  padding:20px 24px;
+  max-width:1400px;margin:auto;width:100%;
+  align-items:start;
+}
+
+/* ---------- VIDEO PLAYER ---------- */
+video{
+  width:100%;
+  height:480px;
+  background:black;
+  border-radius:10px;
+}
+
+/* ---------- HIGHLIGHT CHANNELS ---------- */
+.highlight-box{
+  margin-top:18px;
+  background:var(--card);
+  padding:12px 14px;
+  border-radius:var(--radius);
+  box-shadow:0 2px 4px rgba(0,0,0,.25);
+}
+.highlight-title{
+  margin:0 0 10px 0;
+  font-size:16px;
+  color:var(--muted);
+  font-weight:600;
+}
+.highlight-grid{
+  display:grid;
+  grid-template-columns:repeat(6,1fr);
+  gap:8px;
+}
+.highlight-btn{
+  padding:8px 4px;
+  background:var(--accent);
+  border:0;
+  border-radius:6px;
+  font-size:12px;
+  font-weight:700;
+  cursor:pointer;
+  color:#0b1220;
+  text-align:center;
+}
+@media(max-width:768px){
+  .highlight-grid{
+    grid-template-columns:repeat(3,1fr);
+  }
+}
+
+/* ---------- SIDEBAR ---------- */
+.sidebar{
+  background:rgba(255,255,255,.03);
+  padding:18px;
+  border-radius:var(--radius);
+  height:480px;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+}
+
+.channel-list{
+  display:flex;flex-direction:column;
+  gap:8px;flex:1;
+  overflow-y:auto;scrollbar-width:none;
+}
+.channel-list::-webkit-scrollbar{display:none}
+
+.channel-item{
+  display:flex;align-items:center;gap:10px;
+  padding:8px;border-radius:10px;cursor:pointer;
+}
+.channel-item:hover{
+  background:rgba(255,255,255,.08);
+}
+
+.thumb{
+  width:52px;height:32px;border-radius:6px;
+  background:#122232;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;
+}
+
+/* ---------- MOBILE ---------- */
+@media(max-width:768px){
+  .container{grid-template-columns:1fr}
+  video{height:240px}
+  .sidebar{
+    height:auto;
+    max-height:280px;
+    overflow:auto;
+  }
+}
 </style>
 </head>
+
 <body data-theme="dark">
+
 <header>
   <div class="brand">
     <div class="logo">DI</div>
-    <div><div class="title">DI APP TV</div><div class="subtitle">Live Channels</div></div>
+    <div>
+      <div class="title">DI.TV</div>
+      <div class="subtitle">Live Channels</div>
+    </div>
   </div>
+
   <div class="controls">
     <div class="search"><input id="search" placeholder="Search channel"></div>
     <button class="btn" id="refresh">Refresh</button>
@@ -72,161 +246,215 @@ video{width:100%;height:420px;background:black;border-radius:8px;}
 <div class="cat-bar" id="catBar" style="display:none"></div>
 
 <main class="container">
-  <section class="main">
-    <div id="player-container">
-      <button id="close-mini">✖</button>
-      <video id="player" controls autoplay playsinline webkit-playsinline></video>
-    </div>
+  <section>
+    <video id="player" controls autoplay playsinline webkit-playsinline></video>
     <h3 id="nowPlaying">No channel selected</h3>
-    <div id="grid" class="grid"></div>
+
+    <!-- ---------- HIGHLIGHT SECTION ---------- -->
+    <div class="highlight-box">
+           <div class="highlight-grid">
+        <button class="highlight-btn" data-url="http:\\awaazindia.livebox.co.in\AwaazIndaTVhls\Live.m3u8">Awaz India</button>
+        <button class="highlight-btn" data-url="https:\\ndtvindiaelemarchana.akamaized.net\hls\live\2003679\ndtvindia\master.m3u8">Ndtv india</button>
+        <button class="highlight-btn" data-url="https:\\d35j504z0x2vu2.cloudfront.net\v1\manifest\0bc8e8376bd8417a1b6761138aa41c26c7309312\9xm\23886666-8fc5-470f-aab1-bd637ed607b1\3.m3u8">9xm</button>
+        <button class="highlight-btn" data-url="https://raj.stream/live.m3u8">Raj Music</button>
+        <button class="highlight-btn" data-url="https:\\dyjmyiv3bp2ez.cloudfront.net\pub-iotv9kanmo6oiq\liveabr\playlist.m3u8">TV9</button>
+        <button class="highlight-btn" data-url="https:\\aasthaott.akamaized.net\110923\smil:aasthakannada.smil\playlist.m3u8">Aastha Kannada</button>
+      </div>
+    </div>
+
   </section>
 
   <aside class="sidebar">
-    <h4 style="margin-top:0;color:var(--muted)">Channel List</h4>
-    <div id="channelList" class="channel-list"></div>
+        <div id="channelList" class="channel-list"></div>
   </aside>
 </main>
 
 <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+
 <script>
-const LANGUAGES=[{code:'hin',name:'Hindi'},{code:'tam',name:'Tamil'},{code:'tel',name:'Telugu'},
-{code:'mal',name:'Malayalam'},{code:'kan',name:'Kannada'},{code:'mar',name:'Marathi'},
-{code:'ben',name:'Bengali'},{code:'pan',name:'Punjabi'},{code:'guj',name:'Gujarati'},
-{code:'ban',name:'Bangla'},{code:'ori',name:'Oriya'},{code:'sin',name:'Sinhala'},
-{code:'eng',name:'English'},{code:'bho',name:'Bhojpuri'},{code:'nep',name:'Nepali'},
-{code:'urd',name:'Urdu'},{code:'other',name:'Other'}];
+/* ---------- DATA ---------- */
 
-const CATEGORIES=['animation','auto','business','classic','comedy','cooking','culture','documentary',
-'education','entertainment','family','general','interactive','kids','legislative',
-'lifestyle','movies','music','news','outdoor','public','relax','religious','science',
-'series','shop','sports','travel','weather'];
+const LANGUAGES=[
+  {code:'hin',name:'Hindi'},{code:'tam',name:'Tamil'},{code:'tel',name:'Telugu'},
+  {code:'mal',name:'Malayalam'},{code:'kan',name:'Kannada'},
+  {code:'mar',name:'Marathi'},{code:'ben',name:'Bengali'},
+  {code:'pan',name:'Punjabi'},{code:'guj',name:'Gujarati'},
+  {code:'ban',name:'Bangla'},{code:'ori',name:'Oriya'},
+  {code:'sin',name:'Sinhala'},{code:'eng',name:'English'},
+  {code:'bho',name:'Bhojpuri'},{code:'nep',name:'Nepali'},
+  {code:'urd',name:'Urdu'},{code:'other',name:'Other'}
+];
 
-let mode='language',currentLang='kan',currentCat='news',allChannels=[],isMini=false;
-const listEl=document.getElementById('channelList');
-const gridEl=document.getElementById('grid');
-const player=document.getElementById('player');
-const nowPlaying=document.getElementById('nowPlaying');
-const langBar=document.getElementById('langBar');
-const catBar=document.getElementById('catBar');
-const playerContainer=document.getElementById('player-container');
-const closeMini=document.getElementById('close-mini');
+const CATEGORIES=[
+  'news','entertainment','music','movies','sports','kids',
+  'education','business','religious','lifestyle','auto',
+  'classic','travel','science','series','general'
+];
 
+let mode='language',currentLang='kan',currentCat='news';
+let allChannels=[];
+const listEl=document.getElementById("channelList");
+const player=document.getElementById("player");
+const nowPlaying=document.getElementById("nowPlaying");
+const langBar=document.getElementById("langBar");
+const catBar=document.getElementById("catBar");
+
+/* ---------- RENDER LANGUAGE BUTTONS ---------- */
 function renderLangBar(){
- LANGUAGES.forEach(l=>{
-   const btn=document.createElement('button');
-   btn.className='lang-btn';
-   btn.textContent=l.name;
-   btn.addEventListener('click',()=>{document.querySelectorAll('.lang-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');currentLang=l.code;fetchChannels();});
-   if(l.code==='kan')btn.classList.add('active');
-   langBar.appendChild(btn);
- });
+  LANGUAGES.forEach(l=>{
+    const b=document.createElement("button");
+    b.className="lang-btn";
+    b.textContent=l.name;
+    if(l.code==='kan') b.classList.add("active");
+    b.onclick=()=>{
+      document.querySelectorAll(".lang-btn").forEach(bb=>bb.classList.remove("active"));
+      b.classList.add("active");
+      currentLang=l.code;fetchChannels();
+    };
+    langBar.appendChild(b);
+  });
 }
+
+/* ---------- RENDER CATEGORY BUTTONS ---------- */
 function renderCatBar(){
- CATEGORIES.forEach(c=>{
-   const btn=document.createElement('button');
-   btn.className='cat-btn';
-   btn.textContent=c.charAt(0).toUpperCase()+c.slice(1);
-   btn.addEventListener('click',()=>{document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');currentCat=c;fetchChannels();});
-   if(c==='news')btn.classList.add('active');
-   catBar.appendChild(btn);
- });
+  CATEGORIES.forEach(c=>{
+    const b=document.createElement("button");
+    b.className="cat-btn";
+    b.textContent=c.toUpperCase();
+    if(c==='news') b.classList.add("active");
+    b.onclick=()=>{
+      document.querySelectorAll(".cat-btn").forEach(bb=>bb.classList.remove("active"));
+      b.classList.add("active");
+      currentCat=c;fetchChannels();
+    };
+    catBar.appendChild(b);
+  });
 }
 
+/* ---------- FETCH PLAYLIST ---------- */
 async function fetchChannels(){
- listEl.innerHTML='<div>Loading channels...</div>';
- const baseURL = mode==='language'
-   ? 'https://iptv-org.github.io/iptv/languages/'+currentLang+'.m3u'
-   : 'https://iptv-org.github.io/iptv/categories/'+currentCat+'.m3u';
- try{
-   const res=await fetch(baseURL);
-   const text=await res.text();
-   const ch=parseM3U(text);
-   allChannels=ch.filter(x=>x.src.startsWith('http'));
-   renderChannels(allChannels);
- }catch(e){
-   listEl.innerHTML='<div style="color:red">Failed to load playlist.</div>';
- }
+  listEl.innerHTML="<div>Loading...</div>";
+  const url = mode==="language"
+    ? `https://iptv-org.github.io/iptv/languages/${currentLang}.m3u`
+    : `https://iptv-org.github.io/iptv/categories/${currentCat}.m3u`;
+
+  try{
+    const res=await fetch(url);
+    const text=await res.text();
+    allChannels=parseM3U(text);
+    renderChannelList(allChannels);
+  }catch(err){
+    listEl.innerHTML="<div style='color:red'>Failed to load playlist</div>";
+  }
 }
 
-// parse M3U
+/* ---------- PARSE M3U ---------- */
 function parseM3U(data){
-  const lines=data.split(/\n/);
-  const ch=[];let cur={};let index=1;
-  for(let line of lines){
-    line=line.trim();
-    if(line.startsWith('#EXTINF')){
-      let name=(line.match(/tvg-name="(.*?)"/)||[])[1];
-      if(!name) name=(line.match(/,(.*)$/)||['',''])[1].trim();
-      if(!name) name=`Channel ${index}`;
-      const logo=(line.match(/tvg-logo="(.*?)"/)||['',''])[1];
-      cur={title:name,logo:logo};
-    }else if(line.startsWith('http')){
-      cur.src=line.trim();ch.push(cur);cur={};index++;
+  const lines=data.split("\n");
+  const arr=[];let temp={};
+  for(let l of lines){
+    l=l.trim();
+    if(l.startsWith("#EXTINF")){
+      let title=(l.match(/tvg-name="(.*?)"/)||[])[1];
+      if(!title) title=(l.split(",")[1]||"").trim();
+      let logo=(l.match(/tvg-logo="(.*?)"/)||[])[1];
+      temp={title,logo};
+    }
+    else if(l.startsWith("http")){
+      temp.src=l;arr.push(temp);temp={};
     }
   }
-  return ch;
+  return arr;
 }
 
-function renderChannels(ch){
- listEl.innerHTML='';gridEl.innerHTML='';
- ch.forEach(c=>{
-   const item=document.createElement('div');item.className='channel-item';
-   item.innerHTML=`<div class='thumb'>${c.logo?`<img src='${c.logo}' style='width:100%;height:100%;object-fit:cover;border-radius:6px'/>`:c.title[0]}</div><div>${c.title}</div>`;
-   item.onclick=()=>playChannel(c);listEl.appendChild(item);
-   const card=document.createElement('div');card.className='card';
-   card.innerHTML=`<div class='ch-thumb'>${c.logo?`<img src='${c.logo}' style='width:100%;height:100%;object-fit:cover;border-radius:6px'/>`:c.title}</div><h4>${c.title}</h4>`;
-   card.onclick=()=>playChannel(c);gridEl.appendChild(card);
- });
+/* ---------- RENDER LIST ---------- */
+function renderChannelList(ch){
+  listEl.innerHTML="";
+  ch.forEach(c=>{
+    const item=document.createElement("div");
+    item.className="channel-item";
+    item.innerHTML=`
+      <div class="thumb">
+        ${c.logo?`<img src="${c.logo}" style="width:100%;height:100%;object-fit:cover">`:`<span>${c.title[0]}</span>`}
+      </div>
+      <div>${c.title}</div>
+    `;
+    item.onclick=()=>playChannel(c);
+    listEl.appendChild(item);
+  });
 }
 
+/* ---------- PLAY CHANNEL ---------- */
 function playChannel(ch){
- nowPlaying.textContent=ch.title;
- if(Hls.isSupported()){
-   const hls=new Hls();
-   hls.loadSource(ch.src);
-   hls.attachMedia(player);
-   hls.on(Hls.Events.MANIFEST_PARSED,()=>player.play());
- }else{
-   player.src=ch.src; // fallback for mobile apps & browsers
-   player.load();
-   player.play().catch(()=>console.log('Playback requires user interaction'));
- }
- window.scrollTo({top:0,behavior:'smooth'});
+  nowPlaying.textContent=ch.title;
+  if(Hls.isSupported()){
+    const h=new Hls();
+    h.loadSource(ch.src);
+    h.attachMedia(player);
+  }else{
+    player.src=ch.src;
+  }
+  player.play().catch(()=>{});
 }
 
-// Mini player
-window.addEventListener('scroll',()=>{
- const rect=playerContainer.getBoundingClientRect();
- if(rect.bottom<0&&!isMini){player.classList.add('mini-player');closeMini.style.display='block';isMini=true;}
- else if(rect.bottom>=0&&isMini){player.classList.remove('mini-player');closeMini.style.display='none';isMini=false;}
-});
-closeMini.addEventListener('click',()=>{player.pause();player.classList.remove('mini-player');closeMini.style.display='none';});
-
-// Search
-document.getElementById('search').addEventListener('input',e=>{
- const val=e.target.value.toLowerCase();
- document.querySelectorAll('.channel-item').forEach(el=>{el.style.display=el.textContent.toLowerCase().includes(val)?'flex':'none';});
- document.querySelectorAll('.card').forEach(el=>{el.style.display=el.textContent.toLowerCase().includes(val)?'block':'none';});
+/* ---------- SEARCH ---------- */
+document.getElementById("search").addEventListener("input",e=>{
+  const v=e.target.value.toLowerCase();
+  document.querySelectorAll(".channel-item").forEach(el=>{
+    el.style.display = el.textContent.toLowerCase().includes(v) ? "flex" : "none";
+  });
 });
 
-// Refresh
-document.getElementById('refresh').addEventListener('click',fetchChannels);
+/* ---------- REFRESH ---------- */
+document.getElementById("refresh").onclick=fetchChannels;
 
-// Theme toggle
-const themeToggle=document.getElementById('themeToggle');
-themeToggle.addEventListener('click',()=>{const dark=document.body.dataset.theme==='dark';document.body.dataset.theme=dark?'light':'dark';themeToggle.textContent=dark?'☀️':'🌙';});
+/* ---------- THEME SWITCH ---------- */
+document.getElementById("themeToggle").onclick=()=>{
+  const dark=document.body.dataset.theme==="dark";
+  document.body.dataset.theme=dark?"light":"dark";
+  themeToggle.textContent=dark?"☀️":"🌙";
+};
 
-// Tabs
-document.getElementById('tabLang').addEventListener('click',()=>{
- mode='language';document.getElementById('tabLang').classList.add('active');document.getElementById('tabCat').classList.remove('active');langBar.style.display='flex';catBar.style.display='none';fetchChannels();
+/* ---------- TABS ---------- */
+document.getElementById("tabLang").onclick=()=>{
+  mode="language";
+  tabLang.classList.add("active");
+  tabCat.classList.remove("active");
+  langBar.style.display="flex";
+  catBar.style.display="none";
+  fetchChannels();
+};
+
+document.getElementById("tabCat").onclick=()=>{
+  mode="category";
+  tabCat.classList.add("active");
+  tabLang.classList.remove("active");
+  catBar.style.display="flex";
+  langBar.style.display="none";
+  fetchChannels();
+};
+
+/* ---------- PLAY HIGHLIGHT CHANNELS ---------- */
+document.querySelectorAll(".highlight-btn").forEach(btn=>{
+  btn.onclick=()=>{
+    const url=btn.dataset.url;
+    nowPlaying.textContent=btn.textContent;
+    if(Hls.isSupported()){
+      const h=new Hls();
+      h.loadSource(url);
+      h.attachMedia(player);
+    } else {
+      player.src=url;
+    }
+    player.play().catch(()=>{});
+  };
 });
-document.getElementById('tabCat').addEventListener('click',()=>{
- mode='category';document.getElementById('tabCat').classList.add('active');document.getElementById('tabLang').classList.remove('active');catBar.style.display='flex';langBar.style.display='none';fetchChannels();
-});
 
+/* ---------- INIT ---------- */
 renderLangBar();
 renderCatBar();
 fetchChannels();
 </script>
+
 </body>
 </html>
