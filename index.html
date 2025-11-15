@@ -6,202 +6,94 @@
 <title>DI App TV</title>
 
 <style>
-/* ---------- THEME COLORS ---------- */
 :root{
-  --bg:#0f1724;
-  --card:#0b1220;
-  --text:#e6eef6;
-  --muted:#9aa4b2;
-  --accent:#ff6b35;
-  --radius:12px;
+  --bg:#0f1724;--card:#0b1220;--text:#e6eef6;--muted:#9aa4b2;--accent:#ff6b35;--radius:12px;
   font-family:Inter,"Noto Sans Kannada",system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;
 }
 [data-theme="light"]{
-  --bg:#f7f7f9;
-  --card:#ffffff;
-  --text:#111;
-  --muted:#555;
+  --bg:#f7f7f9;--card:#ffffff;--text:#111;--muted:#555;
 }
 
-/* ---------- BASE ---------- */
 *{box-sizing:border-box}
-body{
-  margin:0;
-  background:var(--bg);
-  color:var(--text);
-  transition:background .3s,color .3s;
-}
+body{margin:0;background:var(--bg);color:var(--text);transition:background .3s,color .3s;}
 
-/* ---------- HEADER ---------- */
 header{
-  width:100%;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:16px 24px;
-  background:var(--card);
-  box-shadow:0 2px 5px rgba(0,0,0,.2);
+  width:100%;display:flex;align-items:center;justify-content:space-between;
+  padding:16px 24px;background:var(--card);box-shadow:0 2px 5px rgba(0,0,0,.2);
 }
-
 .brand{display:flex;align-items:center;gap:10px}
 .logo{
-  width:48px;height:48px;
-  background:linear-gradient(135deg,#ff9b5c,#ff6b35);
-  border-radius:10px;
-  display:flex;align-items:center;justify-content:center;
+  width:48px;height:48px;background:linear-gradient(135deg,#ff9b5c,#ff6b35);
+  border-radius:10px;display:flex;align-items:center;justify-content:center;
   font-weight:800;font-size:20px;color:#0b1220;
 }
 .title{font-size:20px;font-weight:700}
 .subtitle{font-size:12px;color:var(--muted)}
 
 .controls{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.search{background:var(--card);border:1px solid rgba(255,255,255,.15);border-radius:30px;padding:8px 14px;display:flex;align-items:center;}
+.search input{border:0;background:transparent;color:inherit;outline:0;min-width:160px;}
+.btn{padding:8px 12px;background:var(--accent);color:#0b1220;font-weight:600;border-radius:10px;border:0;cursor:pointer;}
+.toggle-btn{padding:8px 12px;background:var(--card);border-radius:10px;border:1px solid rgba(255,255,255,.2);cursor:pointer;}
 
-.search{
-  background:var(--card);
-  border:1px solid rgba(255,255,255,.15);
-  border-radius:30px;
-  padding:8px 14px;
-  display:flex;align-items:center;
-}
-.search input{
-  border:0;background:transparent;color:inherit;outline:0;
-  min-width:160px;
-}
-
-.btn{
-  padding:8px 12px;
-  background:var(--accent);
-  color:#0b1220;
-  font-weight:600;
-  border-radius:10px;
-  border:0;
-  cursor:pointer;
-}
-.toggle-btn{
-  padding:8px 12px;
-  background:var(--card);
-  border-radius:10px;
-  border:1px solid rgba(255,255,255,.2);
-  cursor:pointer;
-}
-
-/* ---------- TABS ---------- */
-.tab-bar{
-  display:flex;justify-content:center;gap:10px;
-  padding:12px;background:rgba(255,255,255,.05);
-}
-.tab-btn{
-  padding:6px 18px;border-radius:20px;
-  border:0;cursor:pointer;font-size:14px;
-  background:var(--card);color:var(--text);
-}
-.tab-btn.active{
-  background:var(--accent);
-  color:#0b1220;font-weight:600;
-}
+.tab-bar{display:flex;justify-content:center;gap:10px;padding:12px;background:rgba(255,255,255,.05);}
+.tab-btn{padding:6px 18px;border-radius:20px;border:0;cursor:pointer;font-size:14px;background:var(--card);color:var(--text);}
+.tab-btn.active{background:var(--accent);color:#0b1220;font-weight:600;}
 
 .lang-bar,.cat-bar{
-  display:flex;overflow-x:auto;white-space:nowrap;
-  gap:8px;padding:10px 16px;
-  background:rgba(255,255,255,.05);
+  display:flex;overflow-x:auto;white-space:nowrap;gap:8px;padding:10px 16px;background:rgba(255,255,255,.05);
 }
-.lang-bar::-webkit-scrollbar,
-.cat-bar::-webkit-scrollbar{display:none}
+.lang-bar::-webkit-scrollbar,.cat-bar::-webkit-scrollbar{display:none}
+.lang-btn,.cat-btn{padding:6px 12px;border-radius:20px;background:var(--card);color:var(--text);border:0;cursor:pointer;flex-shrink:0;}
+.lang-btn.active,.cat-btn.active{background:var(--accent);color:#0b1220;}
 
-.lang-btn,.cat-btn{
-  padding:6px 12px;border-radius:20px;
-  background:var(--card);color:var(--text);
-  border:0;cursor:pointer;flex-shrink:0;
-}
-.lang-btn.active,.cat-btn.active{
-  background:var(--accent);color:#0b1220;
-}
-
-/* ---------- MAIN LAYOUT ---------- */
 .container{
-  display:grid;
-  grid-template-columns:1.2fr 0.8fr;
-  gap:20px;
-  padding:20px 24px;
-  max-width:1400px;margin:auto;width:100%;
-  align-items:start;
+  display:grid;grid-template-columns:1.2fr 0.8fr;gap:20px;
+  padding:20px 24px;max-width:1920px;margin:auto;width:100%;align-items:start;
 }
 
-/* ---------- VIDEO PLAYER ---------- */
-video{
-  width:100%;
-  height:480px;
-  background:black;
+video{width:100%;height:480px;background:black;border-radius:10px;}
+
+.highlight-box{margin-top:18px;background:var(--card);padding:12px 14px;border-radius:var(--radius);}
+.highlight-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;}
+.highlight-btn{padding:8px 4px;background:var(--accent);border:0;border-radius:6px;font-size:20px;font-weight:700;cursor:pointer;color:#0b1220;text-align:center;}
+
+/* ---------- SIDEBAR SCROLLBAR ADDED ---------- */
+.sidebar{
+  background:rgba(255,255,255,.03);
+  padding:30px;border-radius:var(--radius);
+  height:600px;
+  overflow-y:auto; /* ENABLE SCROLLBAR */
+  overflow-x:hidden;
+  display:flex;flex-direction:column;
+  scrollbar-width:auto;
+}
+.sidebar::-webkit-scrollbar{
+  width:8px;
+}
+.sidebar::-webkit-scrollbar-track{
+  background:#0b1220;
+}
+.sidebar::-webkit-scrollbar-thumb{
+  background:var(--accent);
   border-radius:10px;
 }
 
-/* ---------- HIGHLIGHT CHANNELS ---------- */
-.highlight-box{
-  margin-top:18px;
-  background:var(--card);
-  padding:12px 14px;
-  border-radius:var(--radius);
-}
-.highlight-grid{
-  display:grid;
-  grid-template-columns:repeat(6,1fr);
-  gap:8px;
-}
-.highlight-btn{
-  padding:8px 4px;
-  background:var(--accent);
-  border:0;
-  border-radius:6px;
-  font-size:12px;
-  font-weight:700;
-  cursor:pointer;
-  color:#0b1220;
-  text-align:center;
-}
-
-/* ---------- SIDEBAR ---------- */
-.sidebar{
-  background:rgba(255,255,255,.03);
-  padding:18px;
-  border-radius:var(--radius);
-  height:480px;
-  overflow:hidden;
-  display:flex;
-  flex-direction:column;
-}
-
-.channel-list{
-  display:flex;flex-direction:column;
-  gap:8px;flex:1;
-  overflow-y:auto;scrollbar-width:none;
-}
-.channel-list::-webkit-scrollbar{display:none}
-
-.channel-item{
-  display:flex;align-items:center;gap:10px;
-  padding:8px;border-radius:10px;cursor:pointer;
-}
-.channel-item:hover{
-  background:rgba(255,255,255,.08);
-}
-
-.thumb{
-  width:52px;height:32px;border-radius:6px;
-  background:#122232;overflow:hidden;
-  display:flex;align-items:center;justify-content:center;
-}
+.channel-list{display:flex;flex-direction:column;gap:20px;flex:1;}
+.channel-item{display:flex;align-items:center;gap:10px;padding:8px;border-radius:10px;cursor:pointer;}
+.channel-item:hover{background:rgba(255,255,255,.08);}
+.thumb{width:120px;height:80px;border-radius:6px;background:#122232;overflow:hidden;display:flex;align-items:center;justify-content:center;}
 
 @media(max-width:768px){
   .container{grid-template-columns:1fr}
   video{height:240px}
   .highlight-grid{grid-template-columns:repeat(3,1fr)}
-  .sidebar{height:auto;max-height:280px;overflow:auto}
+  .sidebar{height:auto;max-height:280px;}
 }
 </style>
 </head>
 
 <body data-theme="dark">
-
 <header>
   <div class="brand">
     <div class="logo">DI</div>
@@ -236,7 +128,7 @@ video{
         <button class="highlight-btn" data-url="http://awaazindia.livebox.co.in/AwaazIndaTVhls/Live.m3u8">Awaz India</button>
         <button class="highlight-btn" data-url="https://ndtvindiaelemarchana.akamaized.net/hls/live/2003679/ndtvindia/master.m3u8">NDTV India</button>
         <button class="highlight-btn" data-url="https://d35j504z0x2vu2.cloudfront.net/v1/manifest/0bc8e8376bd8417a1b6761138aa41c26c7309312/9xm/23886666-8fc5-470f-aab1-bd637ed607b1/3.m3u8">9XM</button>
-        <button class="highlight-btn" data-url="https:\\d3eyhgoylams0m.cloudfront.net\v1\manifest\93ce20f0f52760bf38be911ff4c91ed02aa2fd92\ed7bd2c7-8d10-4051-b397-2f6b90f99acb\3829f99b-4951-4a9d-98c1-dbc3acfe5193\2.m3u8">Chandana</button>
+        <button class="highlight-btn" data-url="https:\d3eyhgoylams0m.cloudfront.net\v1\manifest\93ce20f0f52760bf38be911ff4c91ed02aa2fd92\ed7bd2c7-8d10-4051-b397-2f6b90f99acb\3829f99b-4951-4a9d-98c1-dbc3acfe5193\2.m3u8">Chandana</button>
         <button class="highlight-btn" data-url="https://dyjmyiv3bp2ez.cloudfront.net/pub-iotv9kanmo6oiq/liveabr/playlist.m3u8">TV9</button>
         <button class="highlight-btn" data-url="https://aasthaott.akamaized.net/110923/smil:aasthakannada.smil/playlist.m3u8">Aastha Kannada</button>
       </div>
@@ -249,9 +141,7 @@ video{
 </main>
 
 <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-
 <script>
-/* ---------- GLOBALS ---------- */
 let mode='language',currentLang='kan',currentCat='news';
 let allChannels=[];
 const listEl=document.getElementById("channelList");
@@ -260,17 +150,7 @@ const nowPlaying=document.getElementById("nowPlaying");
 const langBar=document.getElementById("langBar");
 const catBar=document.getElementById("catBar");
 
-/* ---------- RENDER LANGUAGE BUTTONS ---------- */
-const LANGUAGES=[
-  {code:'hin',name:'Hindi'},{code:'tam',name:'Tamil'},{code:'tel',name:'Telugu'},
-  {code:'mal',name:'Malayalam'},{code:'kan',name:'Kannada'},
-  {code:'mar',name:'Marathi'},{code:'ben',name:'Bengali'},
-  {code:'pan',name:'Punjabi'},{code:'guj',name:'Gujarati'},
-  {code:'ban',name:'Bangla'},{code:'ori',name:'Oriya'},
-  {code:'sin',name:'Sinhala'},{code:'eng',name:'English'},
-  {code:'bho',name:'Bhojpuri'},{code:'nep',name:'Nepali'},
-  {code:'urd',name:'Urdu'},{code:'other',name:'Other'}
-];
+const LANGUAGES=[{code:'hin',name:'Hindi'},{code:'tam',name:'Tamil'},{code:'tel',name:'Telugu'},{code:'mal',name:'Malayalam'},{code:'kan',name:'Kannada'},{code:'mar',name:'Marathi'},{code:'ben',name:'Bengali'},{code:'pan',name:'Punjabi'},{code:'guj',name:'Gujarati'},{code:'ban',name:'Bangla'},{code:'ori',name:'Oriya'},{code:'sin',name:'Sinhala'},{code:'eng',name:'English'},{code:'bho',name:'Bhojpuri'},{code:'nep',name:'Nepali'},{code:'urd',name:'Urdu'},{code:'other',name:'Other'}];
 
 function renderLangBar(){
   LANGUAGES.forEach(l=>{
@@ -280,20 +160,13 @@ function renderLangBar(){
     if(l.code==='kan') b.classList.add("active");
     b.onclick=()=>{
       document.querySelectorAll(".lang-btn").forEach(bb=>bb.classList.remove("active"));
-      b.classList.add("active");
-      currentLang=l.code;
-      fetchChannels();
+      b.classList.add("active");currentLang=l.code;fetchChannels();
     };
     langBar.appendChild(b);
   });
 }
 
-/* ---------- CATEGORY BUTTONS ---------- */
-const CATEGORIES=[
-  'news','entertainment','music','movies','sports','kids',
-  'education','business','religious','lifestyle','auto',
-  'classic','travel','science','series','general'
-];
+const CATEGORIES=['news','entertainment','music','movies','sports','kids','education','business','religious','lifestyle','auto','classic','travel','science','series','general'];
 
 function renderCatBar(){
   CATEGORIES.forEach(c=>{
@@ -303,18 +176,14 @@ function renderCatBar(){
     if(c==='news') b.classList.add("active");
     b.onclick=()=>{
       document.querySelectorAll(".cat-btn").forEach(bb=>bb.classList.remove("active"));
-      b.classList.add("active");
-      currentCat=c;
-      fetchChannels();
+      b.classList.add("active");currentCat=c;fetchChannels();
     };
     catBar.appendChild(b);
   });
 }
 
-/* ---------- M3U PARSER ---------- */
 function parseM3U(data){
-  const lines=data.split("\n");
-  const arr=[];let temp={};
+  const lines=data.split("\n");const arr=[];let temp={};
   for(let l of lines){
     l=l.trim();
     if(l.startsWith("#EXTINF")){
@@ -322,119 +191,80 @@ function parseM3U(data){
       if(!title) title=(l.split(",")[1]||"").trim();
       let logo=(l.match(/tvg-logo="(.*?)"/)||[])[1];
       temp={title,logo};
-    }
-    else if(l.startsWith("http")){
+    } else if(l.startsWith("http")){
       temp.src=l;arr.push(temp);temp={};
     }
   }
   return arr;
 }
 
-/* ---------- FETCH CHANNELS ---------- */
 async function fetchChannels(){
   listEl.innerHTML="<div>Loading...</div>";
-
-  const url = mode==="language"
-    ? `https://iptv-org.github.io/iptv/languages/${currentLang}.m3u`
-    : `https://iptv-org.github.io/iptv/categories/${currentCat}.m3u`;
-
+  const url=mode==="language"?`https://iptv-org.github.io/iptv/languages/${currentLang}.m3u`:`https://iptv-org.github.io/iptv/categories/${currentCat}.m3u`;
   try{
     const res=await fetch(url);
     const text=await res.text();
     allChannels=parseM3U(text);
     renderChannelList(allChannels);
-  }catch(err){
-    listEl.innerHTML="<div style='color:red'>Failed to load playlist</div>";
-  }
+  }catch(err){listEl.innerHTML="<div style='color:red'>Failed to load playlist</div>";}
 }
 
-/* ---------- DISPLAY LIST ---------- */
 function renderChannelList(ch){
   listEl.innerHTML="";
   ch.forEach(c=>{
     const item=document.createElement("div");
     item.className="channel-item";
-    item.innerHTML=`
-      <div class="thumb">
-        ${c.logo?`<img src="${c.logo}" style="width:100%;height:100%;object-fit:cover">`:`<span>${c.title[0]}</span>`}
-      </div>
-      <div>${c.title}</div>
-    `;
+    item.innerHTML=`<div class="thumb">${c.logo?`<img src="${c.logo}" style="width:100%;height:100%;object-fit:cover">`:`<span>${c.title[0]}</span>`}</div><div>${c.title}</div>`;
     item.onclick=()=>playChannel(c.src,c.title);
     listEl.appendChild(item);
   });
 }
 
-/* ---------- PLAY CHANNEL ---------- */
 function playChannel(url,title){
   nowPlaying.textContent=title;
   if(Hls.isSupported()){
-    const h=new Hls();
-    h.loadSource(url);
-    h.attachMedia(player);
-  } else {
-    player.src=url;
-  }
+    const h=new Hls();h.loadSource(url);h.attachMedia(player);
+  } else player.src=url;
   player.play().catch(()=>{});
 }
 
-/* ---------- SEARCH ---------- */
 document.getElementById("search").addEventListener("input",e=>{
   const v=e.target.value.toLowerCase();
   document.querySelectorAll(".channel-item").forEach(el=>{
-    el.style.display = el.textContent.toLowerCase().includes(v) ? "flex" : "none";
+    el.style.display=el.textContent.toLowerCase().includes(v)?"flex":"none";
   });
 });
 
-/* ---------- REFRESH ---------- */
 document.getElementById("refresh").onclick=fetchChannels;
-
-/* ---------- THEME ---------- */
 document.getElementById("themeToggle").onclick=()=>{
   const dark=document.body.dataset.theme==="dark";
   document.body.dataset.theme=dark?"light":"dark";
   themeToggle.textContent=dark?"☀️":"🌙";
 };
 
-/* ---------- TABS ---------- */
 document.getElementById("tabLang").onclick=()=>{
   mode="language";
-  tabLang.classList.add("active");
-  tabCat.classList.remove("active");
-  langBar.style.display="flex";
-  catBar.style.display="none";
+  tabLang.classList.add("active");tabCat.classList.remove("active");
+  langBar.style.display="flex";catBar.style.display="none";
   fetchChannels();
 };
+
 document.getElementById("tabCat").onclick=()=>{
   mode="category";
-  tabCat.classList.add("active");
-  tabLang.classList.remove("active");
-  catBar.style.display="flex";
-  langBar.style.display="none";
+  tabCat.classList.add("active");tabLang.classList.remove("active");
+  catBar.style.display="flex";langBar.style.display="none";
   fetchChannels();
 };
 
-/* ---------- HIGHLIGHT CLICK ---------- */
 document.querySelectorAll(".highlight-btn").forEach(btn=>{
-  btn.onclick=()=>{
-    const url=btn.dataset.url;
-    playChannel(url,btn.textContent);
-  };
+  btn.onclick=()=>playChannel(btn.dataset.url,btn.textContent);
 });
 
-/* ---------- AUTO PLAY (AWAZ INDIA) ---------- */
-window.onload = ()=>{
-  playChannel(
-    "http://awaazindia.livebox.co.in/AwaazIndaTVhls/Live.m3u8",
-    "Awaz India TV"
-  );
+window.onload=()=>{
+  playChannel("http://awaazindia.livebox.co.in/AwaazIndaTVhls/Live.m3u8","Awaz India TV");
 };
 
-/* ---------- INIT ---------- */
-renderLangBar();
-renderCatBar();
-fetchChannels();
+renderLangBar();renderCatBar();fetchChannels();
 </script>
-
 </body>
 </html>
